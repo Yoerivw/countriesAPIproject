@@ -1,6 +1,7 @@
 const getDataBtn = document.getElementById("fetchData");
 const printDataBtn = document.getElementById("printData");
 const countryList = document.getElementById('country-list');
+const dataSuccessSpan = document.querySelector('span.success');
 const countriesList = [];
 
 const printCountries = () => {
@@ -14,9 +15,15 @@ const printCountries = () => {
             population = countriesList[i].population,
             flag = countriesList[i].flag;
         let li = document.createElement('li');
-        let output = '<h3>Country: ' + country + '</h3><p> Capital: ' + capital + '</p><p> Continent: ' + continent + '</p><p> Sub-continent' + subRegion + '</p><p> Population: ' + population + '</p><img src="' + flag + '">'
+        let output = '<div class="card">'
+        output += '<h2 class="text-center">' + country + '</h2>'
+        output += '<img class="flag" src="' + flag + '">'
+        output += '<div class="container">'
+        output += '<p><strong>Capital:</strong> ' + capital + '</p><p> Continent: ' + continent + '</p><p> Sub-continent: ' + subRegion + '</p><p> Population: ' + population + '</p></div>'
+        output += '</div>'
         li.innerHTML = output;
         countryList.appendChild(li);
+        dataSuccessSpan.textContent = "";
     }
 }
 
@@ -36,17 +43,11 @@ const getData = () => {
     xhr.onload = function() {
 
         if (xhr.status >= 400) {
-            console.log(xhr.response);
+            console.log(xhr.response)
+            dataSuccessSpan.textContent = "Could not retrieve the data from the API"
         } else if (xhr.status == 200) {
             const data = xhr.response;
-            /*  let countryData = {
-                 country: data.name,
-                 capital: data.capital,
-                 continent: data.region,
-                 subContinent: data['sub-region'],
-                 population: data.population,
-                 flag: data.flag
-             } */
+
 
             for (let i = 0; i < data.length; i++) {
                 dataC = data[i];
@@ -56,19 +57,11 @@ const getData = () => {
                     subRegion = dataC.subregion,
                     population = dataC.population,
                     flag = dataC.flag;
-                /*  let countryData = {
-                     country: country,
-                     capital = capital,
-                     continent: continent,
-                     subcontinent: subContinent,
-                     population: population,
-                     flag: flag
-                 } */
 
 
                 countriesList.push({ country, capital, continent, subRegion, population, flag });
             }
-            console.log(countriesList);
+            dataSuccessSpan.textContent = "data has successfully been retrieved"
 
         }
 
