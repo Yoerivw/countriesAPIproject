@@ -8,12 +8,12 @@ const printCountries = () => {
 
     for (let i = 0; i < countriesList.length; i++) {
         let country = countriesList[i].country,
-
             capital = countriesList[i].capital,
             continent = countriesList[i].continent,
             subRegion = countriesList[i].subRegion,
             population = countriesList[i].population,
             flag = countriesList[i].flag;
+
         let li = document.createElement('li');
         let output = '<div class="card">'
         output += '<h2 class="text-center">' + country + '</h2>'
@@ -69,8 +69,6 @@ const getData = () => {
     }
     xhr.send();
 }
-
-
 
 getDataBtn.addEventListener('click', getData);
 printDataBtn.addEventListener('click', printCountries);
